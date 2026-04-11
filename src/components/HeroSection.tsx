@@ -169,12 +169,12 @@ const HeroSection = () => {
               Work With Me
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-            <a
-              href="/#about"
+            <Link
+              to="/#about"
               className="btn-premium-outline font-body font-bold text-sm tracking-[0.12em] uppercase border border-white/15 text-foreground/70 px-7 py-4 hover:border-primary hover:text-primary transition-all duration-300"
             >
               My Story
-            </a>
+            </Link>
           </motion.div>
 
           {/* ── Credential badges — staggered per item ── */}

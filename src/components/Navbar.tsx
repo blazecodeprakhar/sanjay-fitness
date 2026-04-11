@@ -66,13 +66,13 @@ const Navbar = () => {
           {/* Desktop Links (Absolute Center) */}
           <div className="hidden lg:flex items-center justify-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className="relative font-body text-sm font-medium tracking-widest uppercase text-foreground/80 hover:text-foreground transition-colors duration-300 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
