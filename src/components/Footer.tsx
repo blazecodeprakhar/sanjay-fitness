@@ -20,6 +20,7 @@ const socials = [
 const Footer = () => {
   const navigate = useNavigate();
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,8 +32,17 @@ const Footer = () => {
       }
     };
 
+    const handleMenuToggle = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setIsMenuOpen(customEvent.detail.mobileOpen);
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("menuToggle", handleMenuToggle);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("menuToggle", handleMenuToggle);
+    };
   }, []);
 
   const handleLogoClick = (e: React.MouseEvent) => {
@@ -181,7 +191,7 @@ const Footer = () => {
         href="#"
         onClick={scrollToTop}
         className={`group fixed right-6 bottom-6 md:right-8 md:bottom-8 rounded-full w-12 h-12 flex items-center justify-center bg-secondary/80 backdrop-blur-md border border-white/10 hover:border-primary hover:bg-primary hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all duration-500 z-50 ${
-          showScrollTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+          showScrollTop && !isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
         }`}
         aria-label="Back to top"
       >

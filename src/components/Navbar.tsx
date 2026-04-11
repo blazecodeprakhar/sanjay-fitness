@@ -33,6 +33,7 @@ const Navbar = () => {
   // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
+    window.dispatchEvent(new CustomEvent("menuToggle", { detail: { mobileOpen } }));
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
