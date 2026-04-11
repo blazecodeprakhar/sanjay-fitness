@@ -1,55 +1,142 @@
 import AnimatedSection from "./AnimatedSection";
-import { Award, Shield, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { Award, Shield, Star, CheckCircle } from "lucide-react";
 
 const certs = [
   {
     icon: Award,
+    badge: "CERTIFICATION 01",
     title: "Gold's Gym International",
-    desc: "Certified Lifestyle Coach with globally recognized credentials in fitness training and lifestyle management.",
+    subtitle: "Certified Lifestyle Coach",
+    desc: "Globally recognized credentials in fitness training and lifestyle management — from one of the world's most prestigious fitness institutions.",
+    highlights: ["Lifestyle Management", "Fitness Training", "International Standard"],
   },
   {
     icon: Shield,
+    badge: "CERTIFICATION 02",
     title: "Natural Bodybuilding",
-    desc: "Certified Coach specialized in drug-free bodybuilding and body recomposition techniques.",
+    subtitle: "Body Recomposition Specialist",
+    desc: "Specialized certification in drug-free bodybuilding and advanced body recomposition techniques — built for sustainable, long-term results.",
+    highlights: ["Drug-Free Protocol", "Body Recomposition", "Science-Backed Methods"],
   },
   {
     icon: Star,
-    title: "Celebrity Coach Mentorship",
-    desc: "Trained under renowned Coach Subhaham, who has worked with Ranbir Kapoor, Amitabh Bachchan, and Aamir Khan.",
+    badge: "MENTORSHIP",
+    title: "Celebrity Coach Lineage",
+    subtitle: "Under Coach Subhaham",
+    desc: "Trained directly under Coach Subhaham — who has worked with Ranbir Kapoor, Amitabh Bachchan, and Aamir Khan — bringing Bollywood-level coaching to everyday athletes.",
+    highlights: ["A-List Clientele", "Elite Methodology", "Direct Mentorship"],
   },
 ];
 
 const CertificationsSection = () => {
   return (
-    <section id="certifications" className="py-24 md:py-32 border-t border-border">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="certifications" className="py-20 md:py-36 border-t border-border relative overflow-hidden">
+
+      {/* Background accent */}
+      <div className="absolute bottom-0 left-0 w-[600px] h-[400px] bg-primary/3 blur-[140px] rounded-full pointer-events-none" />
+
+      <div className="container mx-auto px-5 md:px-8">
+
+        {/* Header */}
         <AnimatedSection>
-          <div className="w-16 h-1 bg-primary mb-6" />
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading mb-4">
-            CERTIFIED. PROVEN. <span className="text-primary">TRUSTED.</span>
-          </h2>
-          <p className="text-muted-foreground text-lg mb-16 max-w-xl">
-            Backed by world-class credentials and mentorship from the best in the industry.
-          </p>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-[2px] bg-primary rounded-full" />
+            <span className="font-body text-xs tracking-[0.4em] uppercase text-primary font-semibold">
+              Credentials
+            </span>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-24">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading leading-tight">
+              CERTIFIED.{" "}
+              <br className="hidden sm:block" />
+              PROVEN.{" "}
+              <span className="text-primary">TRUSTED.</span>
+            </h2>
+            <p className="text-muted-foreground text-base md:text-lg max-w-xs font-body leading-relaxed">
+              Backed by world-class credentials and mentorship from the very best in the industry.
+            </p>
+          </div>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {certs.map((cert, i) => (
-            <AnimatedSection key={cert.title} delay={i * 0.15}>
-              <div className="group relative border border-border rounded-3xl p-8 h-full hover:border-primary transition-all duration-500 hover:-translate-y-2 cursor-default overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                <div className="relative z-10">
-                  <div className="w-14 h-14 border border-border rounded-full flex items-center justify-center mb-6 group-hover:border-primary transition-colors duration-300">
-                    <cert.icon className="w-7 h-7 text-primary group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="font-heading text-2xl mb-3">{cert.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{cert.desc}</p>
+            <motion.div
+              key={cert.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
+              className="group relative bg-secondary/20 border border-white/8 rounded-3xl p-7 md:p-8 flex flex-col gap-6 hover:border-primary/40 hover:bg-secondary/35 transition-all duration-500 cursor-default overflow-hidden"
+            >
+              {/* Top glow on hover */}
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
+
+              {/* Bottom line sweep */}
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+
+              {/* Badge */}
+              <div className="flex items-center justify-between">
+                <span className="font-body text-[10px] tracking-[0.4em] uppercase text-primary/60 font-semibold">
+                  {cert.badge}
+                </span>
+                <div className="w-10 h-10 border border-white/10 rounded-xl flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/5 transition-all duration-400">
+                  <cert.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
                 </div>
-                <div className="absolute bottom-0 left-0 w-full h-[3px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
-            </AnimatedSection>
+
+              {/* Title */}
+              <div>
+                <h3 className="font-heading text-xl md:text-2xl text-foreground mb-1 group-hover:text-primary transition-colors duration-300">
+                  {cert.title}
+                </h3>
+                <p className="font-body text-xs text-primary/70 uppercase tracking-[0.2em]">
+                  {cert.subtitle}
+                </p>
+              </div>
+
+              {/* Description */}
+              <p className="text-muted-foreground text-sm leading-relaxed font-body flex-1">
+                {cert.desc}
+              </p>
+
+              {/* Highlights */}
+              <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
+                {cert.highlights.map((h) => (
+                  <div key={h} className="flex items-center gap-3">
+                    <CheckCircle className="w-3.5 h-3.5 text-primary flex-shrink-0" strokeWidth={2} />
+                    <span className="font-body text-xs text-muted-foreground tracking-wide">{h}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Card number watermark */}
+              <div className="absolute bottom-6 right-7 font-heading text-6xl text-white/3 leading-none select-none pointer-events-none">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+
+            </motion.div>
           ))}
         </div>
+
+        {/* Bottom trust bar */}
+        <AnimatedSection delay={0.5}>
+          <div className="mt-14 md:mt-20 border border-white/8 rounded-2xl px-6 py-5 md:px-10 md:py-6 flex flex-col sm:flex-row items-center justify-between gap-6 bg-secondary/20">
+            <div className="flex flex-wrap justify-center sm:justify-start items-center gap-x-8 gap-y-3">
+              {["100+ Clients Transformed", "Zero Compromise on Standards", "Results-First Philosophy"].map((item) => (
+                <div key={item} className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                  <span className="font-body text-xs text-muted-foreground tracking-wider">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="font-heading text-sm tracking-[0.3em] text-primary whitespace-nowrap">
+              EST. BHUBANESWAR
+            </div>
+          </div>
+        </AnimatedSection>
+
       </div>
     </section>
   );
