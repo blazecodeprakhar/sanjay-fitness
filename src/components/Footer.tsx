@@ -11,9 +11,9 @@ const footerLinks = [
 ];
 
 const socials = [
-  { icon: Instagram, label: "Instagram", href: "#", color: "hover:text-[#E1306C]" },
-  { icon: MessageCircle, label: "WhatsApp", href: "#", color: "hover:text-[#25D366]" },
-  { icon: Youtube, label: "YouTube", href: "#", color: "hover:text-[#FF0000]" },
+  { icon: Instagram, label: "Instagram", href: "#" },
+  { icon: MessageCircle, label: "WhatsApp", href: "#" },
+  { icon: Youtube, label: "YouTube", href: "#" },
 ];
 
 const Footer = () => {
@@ -22,7 +22,6 @@ const Footer = () => {
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate("/");
-    // After navigating, scroll to top smoothly
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 50);
@@ -34,77 +33,67 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-background overflow-hidden border-t border-border mt-auto">
+    <footer className="relative bg-[#050505] overflow-hidden border-t border-white/5 pt-16 md:pt-24 mt-auto">
       
-      {/* ── Background Elements ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
-        {/* Subtle top gradient */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        {/* Massive watermark text */}
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-full text-center">
-          <span className="font-heading text-[22vw] text-white/[0.012] leading-none whitespace-nowrap">
-            SS FITNESS
-          </span>
-        </div>
+      {/* ── Background Watermark (Subtle) ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none flex items-end justify-center">
+        <span className="font-heading text-[20vw] text-white/[0.008] leading-none whitespace-nowrap translate-y-1/4">
+          SS FITNESS
+        </span>
       </div>
 
       <div className="container relative z-10 mx-auto px-6 md:px-8">
         {/* Top grid section */}
-        <div className="py-16 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-16 md:pb-20">
           
-          {/* Brand & Bio */}
-          <div className="md:col-span-5 lg:col-span-4">
+          {/* ── Brand & Bio ── */}
+          <div className="md:col-span-5 lg:col-span-5 flex flex-col items-start">
             <AnimatedSection>
               <a href="/" onClick={handleLogoClick} className="block mb-8 w-fit group">
-                <div className="relative">
-                  <img
-                    src="/logo_yellow_custom.png"
-                    alt="SS Fitness"
-                    className="h-9 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
-                </div>
+                <img
+                  src="/logo_yellow_custom.png"
+                  alt="SS Fitness"
+                  className="h-10 md:h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+                />
               </a>
-              <p className="text-sm md:text-[15px] text-muted-foreground/80 leading-relaxed font-body mb-8 max-w-sm">
+              <p className="text-sm md:text-base text-white/50 leading-[1.8] font-body mb-10 max-w-sm font-light">
                 Certified Lifestyle & Body Recomposition Coach. Transforming bodies, building
                 confidence, and creating sustainable health systems for life.
               </p>
               
               {/* Social row */}
               <div className="flex gap-4">
-                {socials.map(({ icon: Icon, label, href, color }) => (
+                {socials.map(({ icon: Icon, label, href }) => (
                   <a
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="group relative w-11 h-11 border border-white/10 rounded-xl flex items-center justify-center bg-secondary/20 backdrop-blur-sm overflow-hidden transition-all duration-400 hover:border-white/20 hover:-translate-y-1"
+                    className="w-12 h-12 border border-white/10 rounded-2xl flex items-center justify-center bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:border-primary border-transparent hover:bg-primary/5 hover:-translate-y-1 group"
                   >
-                    <div className="absolute inset-0 bg-white/5 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-400 ease-out" />
-                    <Icon className={`w-4 h-4 text-muted-foreground/70 transition-colors duration-400 relative z-10 ${color}`} />
+                    <Icon className="w-5 h-5 text-white/50 transition-colors duration-300 group-hover:text-primary" strokeWidth={1.5} />
                   </a>
                 ))}
               </div>
             </AnimatedSection>
           </div>
 
-          {/* Spacer column */}
-          <div className="hidden lg:block lg:col-span-2" />
+          {/* Spacer */}
+          <div className="hidden lg:block lg:col-span-1" />
 
-          {/* Navigation Links */}
+          {/* ── Navigation Links ── */}
           <div className="md:col-span-3 lg:col-span-3">
             <AnimatedSection delay={0.1}>
-              <h4 className="flex items-center gap-3 font-heading text-[11px] tracking-[0.3em] text-foreground mb-8">
-                <span className="w-6 h-[1px] bg-primary/50" />
+              <h4 className="flex items-center gap-3 font-heading text-[12px] font-bold tracking-[0.3em] text-white mb-8">
+                <span className="w-8 h-[2px] bg-primary" />
                 NAVIGATION
               </h4>
-              <nav className="flex flex-col gap-4">
+              <nav className="flex flex-col gap-5">
                 {footerLinks.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
-                    className="group w-fit flex items-center gap-2 font-body text-sm text-muted-foreground transition-all duration-300 hover:text-primary"
+                    className="group w-fit flex items-center gap-3 font-body text-[15px] font-medium text-white/60 transition-all duration-300 hover:text-white"
                   >
-                    <span className="w-0 h-px bg-primary transition-all duration-300 group-hover:w-4" />
                     {link.label}
                   </Link>
                 ))}
@@ -112,63 +101,74 @@ const Footer = () => {
             </AnimatedSection>
           </div>
 
-          {/* Contact Info */}
+          {/* ── Contact Info & CTA ── */}
           <div className="md:col-span-4 lg:col-span-3">
             <AnimatedSection delay={0.2}>
-              <h4 className="flex items-center gap-3 font-heading text-[11px] tracking-[0.3em] text-foreground mb-8">
-                <span className="w-6 h-[1px] bg-primary/50" />
+              <h4 className="flex items-center gap-3 font-heading text-[12px] font-bold tracking-[0.3em] text-white mb-8">
+                <span className="w-8 h-[2px] bg-primary" />
                 CONTACT
               </h4>
-              <div className="space-y-6">
-                <div className="group">
-                  <p className="font-heading text-[10px] tracking-[0.25em] text-muted-foreground/60 mb-1.5 transition-colors group-hover:text-primary/70">EMAIL</p>
-                  <a href="mailto:contact@ssfitness.com" className="text-sm text-foreground/90 font-body hover:text-primary transition-colors">
+              
+              <div className="space-y-7">
+                <div>
+                  <p className="font-heading text-[10px] font-semibold tracking-[0.25em] text-white/40 mb-2 uppercase">Email</p>
+                  <a href="mailto:contact@ssfitness.com" className="text-[15px] text-white font-body font-medium hover:text-primary transition-colors">
                     contact@ssfitness.com
                   </a>
                 </div>
-                <div className="group">
-                  <p className="font-heading text-[10px] tracking-[0.25em] text-muted-foreground/60 mb-1.5 transition-colors group-hover:text-primary/70">LOCATION</p>
-                  <p className="text-sm text-foreground/90 font-body">
+                
+                <div>
+                  <p className="font-heading text-[10px] font-semibold tracking-[0.25em] text-white/40 mb-2 uppercase">Location</p>
+                  <p className="text-[15px] text-white font-body font-medium">
                     Bhubaneswar, India
                   </p>
                 </div>
-                <div className="pt-2">
-                  <a href="/contact" className="inline-flex items-center justify-center font-heading text-[10px] bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-primary/10 tracking-[0.2em] uppercase rounded-lg px-4 py-2.5 transition-all duration-300 text-primary">
+                
+                <div className="pt-3">
+                  <Link 
+                    to="/contact" 
+                    className="inline-block font-body font-bold text-[11px] tracking-[0.25em] uppercase border border-white/10 bg-white/5 hover:border-primary hover:bg-primary hover:text-black hover:shadow-[0_0_20px_rgba(255,215,0,0.2)] rounded-lg px-6 py-3.5 transition-all duration-300 text-primary"
+                  >
                     Start Your Journey
-                  </a>
+                  </Link>
                 </div>
               </div>
             </AnimatedSection>
           </div>
 
         </div>
+      </div>
 
-        {/* ── Bottom Bar ── */}
-        <div className="border-t border-white/5 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="font-heading text-[11px] tracking-[0.4em] text-muted-foreground text-center md:text-left">
-            TRANSFORM. ELEVATE. <span className="text-primary tracking-[0.5em]">DOMINATE.</span>
+      {/* ── Bottom Bar ── */}
+      <div className="relative z-10 border-t border-white/5">
+        <div className="container mx-auto px-6 md:px-8 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          <p className="font-heading text-[11px] md:text-sm tracking-[0.4em] text-white/50 text-center md:text-left uppercase">
+            Transform. Elevate. <span className="text-primary font-bold">Dominate.</span>
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <p className="text-[11px] text-muted-foreground/60 tracking-wider font-body">
+          <div className="flex items-center gap-4 text-[11px] md:text-xs text-white/40 font-body">
+            <p className="tracking-wider">
               &copy; {new Date().getFullYear()} Sanjay Singh Fitness.
             </p>
-            <div className="hidden sm:block w-1 h-1 rounded-full bg-white/10" />
-            <p className="text-[11px] text-muted-foreground/60 tracking-wider font-body hover:text-foreground transition-colors cursor-pointer">
+            <span className="w-[3px] h-[3px] rounded-full bg-white/20" />
+            <a href="#" className="tracking-wider hover:text-white transition-colors">
               Privacy Policy
-            </p>
+            </a>
           </div>
 
-          <a
-            href="#"
-            onClick={scrollToTop}
-            className="group absolute right-6 md:right-8 bottom-[1.8rem] rounded-xl w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 hover:border-primary hover:bg-primary hover:shadow-[0_0_15px_rgba(255,215,0,0.3)] transition-all duration-400 z-20"
-            aria-label="Back to top"
-          >
-             <ArrowUp className="w-4 h-4 text-muted-foreground group-hover:text-black transition-colors duration-400 group-hover:-translate-y-0.5" />
-          </a>
         </div>
       </div>
+
+      {/* Floating Back to Top Button */}
+      <a
+        href="#"
+        onClick={scrollToTop}
+        className="group fixed right-6 bottom-6 md:right-8 md:bottom-8 rounded-full w-12 h-12 flex items-center justify-center bg-secondary/80 backdrop-blur-md border border-white/10 hover:border-primary hover:bg-primary hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all duration-400 z-50"
+        aria-label="Back to top"
+      >
+        <ArrowUp className="w-5 h-5 text-white/50 group-hover:text-black transition-colors duration-400 group-hover:-translate-y-0.5" />
+      </a>
     </footer>
   );
 };
