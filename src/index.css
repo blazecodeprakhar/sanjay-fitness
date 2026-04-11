@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 50 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 50 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 50 100% 50%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 50 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 50 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "ss01", "ss02";
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase tracking-wider;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-foreground;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 30px hsl(50 100% 50% / 0.15);
+  }
+
+  .glass-nav {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: hsl(0 0% 0% / 0.7);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .noise-bg {
+    position: relative;
+  }
+  .noise-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Premium Button Styles */
+  .btn-premium {
+    @apply relative overflow-hidden rounded-full transition-all duration-500 ease-out z-10;
+  }
+  .btn-premium::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 translate-y-[100%] transition-transform duration-500 ease-out z-[-1] rounded-full;
+  }
+  .btn-premium:hover::before {
+    @apply translate-y-0;
+  }
+  .btn-premium:hover {
+    @apply shadow-[0_0_40px_hsl(var(--primary)/0.6)] -translate-y-1 scale-105;
+  }
+
+  .btn-premium-outline {
+    @apply relative overflow-hidden rounded-full transition-all duration-500 ease-out z-10;
+  }
+  .btn-premium-outline::before {
+    content: '';
+    @apply absolute inset-0 bg-foreground translate-y-[100%] transition-transform duration-500 ease-out z-[-1] rounded-full;
+  }
+  .btn-premium-outline:hover::before {
+    @apply translate-y-0;
+  }
+  .btn-premium-outline:hover {
+    @apply text-background shadow-[0_0_40px_hsl(0_0%_100%/0.3)] -translate-y-1 scale-105;
+  }
+
+  .animate-wave {
+    animation: wave 2.5s infinite;
+  }
+
+  @keyframes wave {
+    0% { transform: rotate( 0.0deg) }
+    10% { transform: rotate(14.0deg) }
+    20% { transform: rotate(-8.0deg) }
+    30% { transform: rotate(14.0deg) }
+    40% { transform: rotate(-4.0deg) }
+    50% { transform: rotate(10.0deg) }
+    60% { transform: rotate( 0.0deg) }
+    100% { transform: rotate( 0.0deg) }
+  }
+
+  /* Logo hover — yellow → white smooth fade */
+  .logo-hover {
+    filter: brightness(1);
+    transition: filter 0.5s ease;
+  }
+  .logo-hover:hover {
+    filter: brightness(0) invert(1);
+  }
+}
