@@ -1,196 +1,298 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-silhouette.jpg";
-import { ArrowRight, Award, Users, Star } from "lucide-react";
+import { ArrowRight, Award, Users, Star, Sun, Wind, Play, Square } from "lucide-react";
+
+// Breathing cycle configuration for the interactive wellness widget
+const BREATH_STEPS = [
+  { state: "inhale", text: "Breathe In", duration: 4, scale: 1.4, color: "rgba(86,119,108,0.35)" },
+  { state: "hold", text: "Hold", duration: 4, scale: 1.4, color: "rgba(179,106,91,0.3)" },
+  { state: "exhale", text: "Breathe Out", duration: 4, scale: 1.0, color: "rgba(86,119,108,0.15)" },
+  { state: "rest", text: "Hold / Rest", duration: 4, scale: 1.0, color: "rgba(30,30,30,0.05)" },
+];
 
 const textReveal = {
-  hidden: { opacity: 0, y: 60, skewY: 3 },
+  hidden: { opacity: 0, y: 50, skewY: 2 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     skewY: 0,
     transition: {
-      duration: 0.85,
-      delay: 0.3 + i * 0.12,
-      ease: [0.22, 1, 0.36, 1] as const,
+      duration: 0.8,
+      delay: 0.2 + i * 0.1,
+      ease: [0.16, 1, 0.3, 1] as const,
     },
   }),
 };
 
-const badges = [
-  { icon: Award, label: "Gold's Gym Certified" },
-  { icon: Users, label: "100+ Clients" },
-  { icon: Star,  label: "Celebrity Mentorship" },
-];
-
 const HeroSection = () => {
+  const heroImage = "/yoga_lifestyle_hero.png";
+
+  // Breathing widget states
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(4);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isPlaying) {
+      setTimeLeft(BREATH_STEPS[stepIndex].duration);
+      
+      const updateInterval = 1000;
+      timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            setStepIndex((curr) => (curr + 1) % BREATH_STEPS.length);
+            return BREATH_STEPS[(stepIndex + 1) % BREATH_STEPS.length].duration;
+          }
+          return prev - 1;
+        });
+      }, updateInterval);
+    } else {
+      setStepIndex(0);
+      setTimeLeft(4);
+    }
+    return () => clearInterval(timer);
+  }, [isPlaying, stepIndex]);
+
+  const currentStep = BREATH_STEPS[stepIndex];
+  const currentStepText = isPlaying ? currentStep.text : "Breathe";
+
   return (
-    <section className="relative min-h-screen w-full flex items-center overflow-hidden grid-bg noise-bg">
+    <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-background pt-24 md:pt-32 pb-16 md:pb-24 grid-bg noise-bg">
+      
+      {/* ── Background Decorative Ambient Glows ── */}
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-primary/4 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-accent/3 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* ── Background image layer ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-0 pointer-events-none"
-      >
-        {/* Image panel */}
-        <div className="absolute right-0 top-0 bottom-0 w-full md:w-[58%] opacity-20 md:opacity-40">
-          <motion.img
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 3, ease: "easeOut" }}
-            src={heroImage}
-            alt="Sanjay Singh - Certified Body Recomposition Coach"
-            className="w-full h-full object-cover object-top"
-          />
-          {/* Left fade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/75 to-transparent" />
-          {/* Bottom fade */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20" />
-          {/* Inner vignette */}
-          <div className="absolute inset-0 bg-gradient-to-l from-background/40 to-transparent" />
-        </div>
+      <div className="container mx-auto px-5 md:px-8 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* ── LEFT COLUMN: Premium Copy & CTA ── */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left order-2 lg:order-1">
+            
 
-        {/* Large left golden radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_10%_65%,rgba(255,215,0,0.07),transparent)]" />
-        {/* Smaller right accent glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_30%_40%_at_75%_30%,rgba(255,215,0,0.04),transparent)]" />
-      </motion.div>
 
-      {/* ── Left vertical accent line ── */}
-      <div className="absolute top-0 left-[10%] w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent hidden xl:block pointer-events-none" />
-
-      {/* ── Right vertical branding text (desktop only) ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
-        className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col items-center gap-4 pointer-events-none"
-      >
-        <div className="w-px h-20 bg-gradient-to-b from-transparent to-primary/30" />
-        <span
-          className="font-heading text-[10px] tracking-[0.5em] text-white/15 uppercase"
-          style={{ writingMode: "vertical-rl" }}
-        >
-          SS FITNESS
-        </span>
-        <div className="w-px h-20 bg-gradient-to-t from-transparent to-primary/30" />
-      </motion.div>
-
-      {/* ── Floating stat badge (desktop only) ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.7 }}
-        className="absolute bottom-28 right-[8%] hidden lg:block pointer-events-none"
-      >
-        <div className="border border-white/10 bg-background/70 backdrop-blur-md rounded-2xl px-5 py-4">
-          <div className="flex items-center gap-3 mb-1">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Active Clients</span>
-          </div>
-          <div className="font-heading text-3xl text-primary leading-none">100+</div>
-          <div className="font-body text-[10px] text-muted-foreground mt-1">Lives Transformed</div>
-        </div>
-      </motion.div>
-
-      {/* ── Main content ── */}
-      <div className="relative z-10 w-full container mx-auto px-5 md:px-8 pt-32 pb-20 md:pt-44 md:pb-28">
-        <div className="max-w-3xl">
-
-          {/* Animated golden line */}
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 80 }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-            className="h-[3px] bg-primary rounded-full mb-10"
-          />
-
-          {/* ── Headline block 1 — white ── */}
-          <div className="mb-1">
-            {["TRANSFORM", "YOUR BODY."].map((line, i) => (
-              <div key={i} className="overflow-hidden">
-                <motion.span
-                  custom={i}
+            {/* Typography composition */}
+            <div className="space-y-1 mb-6 md:mb-8 w-full">
+              <div className="overflow-hidden">
+                <motion.h1
+                  custom={0}
                   initial="hidden"
                   animate="visible"
                   variants={textReveal}
-                  className="block font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.88] text-foreground"
+                  className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-[5.5rem] leading-[1.05] text-foreground font-light tracking-tight"
                 >
-                  {line}
-                </motion.span>
+                  DESIGNING
+                </motion.h1>
               </div>
-            ))}
-          </div>
-
-          {/* ── Headline block 2 — primary yellow ── */}
-          <div className="mb-8 md:mb-12">
-            {["TRANSFORM", "YOUR LIFE."].map((line, i) => (
-              <div key={i} className="overflow-hidden">
-                <motion.span
-                  custom={i + 2}
+              <div className="overflow-hidden">
+                <motion.h1
+                  custom={1}
                   initial="hidden"
                   animate="visible"
                   variants={textReveal}
-                  className="block font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.88] text-primary"
+                  className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-[5.5rem] leading-[1.05] text-primary italic font-medium tracking-tight"
                 >
-                  {line}
-                </motion.span>
+                  DAILY RITUALS
+                </motion.h1>
               </div>
-            ))}
-          </div>
+              <div className="overflow-hidden">
+                <motion.h1
+                  custom={2}
+                  initial="hidden"
+                  animate="visible"
+                  variants={textReveal}
+                  className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-[5.5rem] leading-[1.05] text-foreground font-light tracking-tight"
+                >
+                  FOR VITALITY.
+                </motion.h1>
+              </div>
+            </div>
 
-          {/* ── Sub copy ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.0 }}
-            className="flex items-start gap-4 mb-9 max-w-md"
-          >
-            <div className="w-[2px] min-h-[2.75rem] bg-primary/80 rounded-full flex-shrink-0 mt-1" />
-            <p className="text-sm md:text-[15px] text-foreground/60 font-body leading-relaxed">
-              Certified Lifestyle &amp; Body Recomposition Coach.
-              Helping you rebuild your body, rewire your habits, and reclaim your life.
-            </p>
-          </motion.div>
-
-          {/* ── CTA Buttons ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.15 }}
-            className="flex flex-wrap gap-3 mb-10 md:mb-14"
-          >
-            <Link
-              to="/contact"
-              className="btn-premium font-body font-bold text-sm tracking-[0.12em] uppercase bg-primary text-black px-7 py-4 flex items-center gap-2.5 group"
+            {/* Sub-description with accent bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              className="flex items-start gap-4 mb-10 max-w-lg"
             >
-              Work With Me
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-            <Link
-              to="/#about"
-              className="btn-premium-outline font-body font-bold text-sm tracking-[0.12em] uppercase border border-white/15 text-foreground/70 px-7 py-4 hover:border-primary hover:text-primary transition-all duration-300"
-            >
-              My Story
-            </Link>
-          </motion.div>
+              <div className="w-[2px] min-h-[3rem] bg-primary/30 rounded-full flex-shrink-0 mt-1" />
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-body leading-relaxed">
+                Unlock a balanced nervous system, conscious eating patterns, and structural mobility. We build sustainable daily habits customized to your high-performance schedule.
+              </p>
+            </motion.div>
 
-          {/* ── Credential badges — staggered per item ── */}
-          <div className="flex flex-wrap gap-2">
-            {badges.map(({ icon: Icon, label }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.3 + i * 0.1 }}
-                className="inline-flex items-center gap-2 border border-white/8 rounded-full px-3.5 py-1.5 bg-secondary/20 backdrop-blur-sm hover:border-primary/30 hover:bg-secondary/40 transition-all duration-300 cursor-default"
+            {/* CTA row */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.75 }}
+              className="flex flex-wrap gap-4 mb-12 md:mb-16 w-full"
+            >
+              <Link
+                to="/contact"
+                className="btn-premium font-body font-bold text-xs sm:text-sm tracking-[0.15em] uppercase bg-primary text-white px-8 py-4 sm:py-5 flex items-center gap-3 group shadow-md"
               >
-                <Icon className="w-3 h-3 text-primary flex-shrink-0" strokeWidth={2} />
-                <span className="font-body text-[11px] text-muted-foreground tracking-wide whitespace-nowrap">{label}</span>
-              </motion.div>
-            ))}
+                Begin Your Journey
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
+              <Link
+                to="/#about"
+                className="btn-premium-outline font-body font-bold text-xs sm:text-sm tracking-[0.15em] uppercase border border-border text-foreground/80 px-8 py-4 sm:py-5 hover:border-primary hover:text-white transition-all duration-300 bg-background/50 shadow-sm"
+              >
+                Our Philosophy
+              </Link>
+            </motion.div>
+
+            {/* Staggered features */}
+            <div className="flex flex-wrap gap-3 w-full">
+              {[
+                { icon: Award, label: "Yoga Alliance USA" },
+                { icon: Users, label: "100+ Lifestyles Reclaimed" },
+                { icon: Star, label: "Habit & Breathwork Protocols" },
+              ].map(({ icon: Icon, label }, i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
+                  className="inline-flex items-center gap-2 border border-border/80 rounded-full px-4 py-2 bg-secondary/15 shadow-sm hover:border-primary/20 transition-colors cursor-default"
+                >
+                  <Icon className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
+                  <span className="font-body text-[11px] text-muted-foreground font-bold tracking-wider uppercase">{label}</span>
+                </motion.div>
+              ))}
+            </div>
+
+          </div>
+
+          {/* ── RIGHT COLUMN: Editorial Arch Image & Interactive Widget ── */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center relative order-1 lg:order-2">
+            
+            {/* Arched image container (Wellness temple window style) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full aspect-[4/5] max-w-[340px] sm:max-w-[380px] rounded-t-[180px] overflow-hidden border-[6px] border-white shadow-xl bg-secondary/10"
+            >
+              <motion.img
+                initial={{ scale: 1.05 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 2.5, ease: "easeOut" }}
+                src={heroImage}
+                alt="Sanjay Singh - Mindfulness Alignment"
+                className="w-full h-full object-cover object-center"
+              />
+              
+              {/* Soft overlay gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+            </motion.div>
+
+            {/* Floating Card: Morning Routine */}
+            <motion.div
+              initial={{ opacity: 0, x: -30, y: -20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="absolute top-[15%] -left-[10%] hidden sm:flex items-center gap-3 border border-border/85 bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-sm"
+            >
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <Sun className="w-5 h-5 animate-pulse" />
+              </div>
+              <div>
+                <p className="font-heading text-[10px] tracking-[0.2em] text-primary font-bold uppercase">Daily Practice</p>
+                <p className="font-body text-xs text-foreground font-bold">07:00 AM Alignment</p>
+              </div>
+            </motion.div>
+
+            {/* Floating Card: Interactive Breath Bubble */}
+            <motion.div
+              initial={{ opacity: 0, x: 30, y: 30 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              className="absolute -bottom-6 -right-[5%] w-[190px] sm:w-[220px] border border-border/85 bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-md flex flex-col items-center text-center"
+            >
+              {/* Outer wave ring */}
+              <div className="relative w-20 h-20 flex items-center justify-center mb-3">
+                <motion.div
+                  animate={{
+                    scale: isPlaying ? currentStep.scale : 1.0,
+                    backgroundColor: isPlaying ? currentStep.color : "rgba(86,119,108,0.1)"
+                  }}
+                  transition={{
+                    duration: isPlaying ? currentStep.duration : 0.8,
+                    ease: "easeInOut"
+                  }}
+                  className="w-16 h-16 rounded-full flex items-center justify-center transition-colors"
+                />
+                
+                {/* Center Core */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <Wind className={`w-6 h-6 text-primary ${isPlaying && stepIndex === 0 ? "animate-bounce" : ""}`} />
+                </div>
+
+                {/* Ring Countdown Progress border */}
+                {isPlaying && (
+                  <svg className="absolute inset-0 w-20 h-20 -rotate-90">
+                    <motion.circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      stroke="currentColor"
+                      className="text-primary/20"
+                      strokeWidth="2.5"
+                      fill="transparent"
+                    />
+                    <motion.circle
+                      cx="40"
+                      cy="40"
+                      r="36"
+                      stroke="currentColor"
+                      className="text-primary"
+                      strokeWidth="2.5"
+                      fill="transparent"
+                      initial={{ strokeDasharray: "226 226", strokeDashoffset: 226 }}
+                      animate={{ strokeDashoffset: (timeLeft / currentStep.duration) * 226 }}
+                      transition={{ duration: 1, ease: "linear" }}
+                    />
+                  </svg>
+                )}
+              </div>
+
+              {/* Status Label */}
+              <p className="font-heading text-sm text-foreground font-bold tracking-wide min-h-[20px] mb-1">
+                {currentStepText}
+              </p>
+              
+              {/* Description */}
+              <p className="font-body text-[10px] text-muted-foreground mb-4 leading-normal">
+                {isPlaying ? `${timeLeft} seconds left` : "Align breath to restore nervous balance"}
+              </p>
+
+              {/* Play / Stop Action Button */}
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`w-full font-body font-bold text-[10px] tracking-widest uppercase py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 ${
+                  isPlaying
+                    ? "bg-secondary text-foreground hover:bg-secondary/80"
+                    : "bg-primary text-white hover:brightness-105"
+                }`}
+              >
+                {isPlaying ? (
+                  <>
+                    <Square className="w-2.5 h-2.5 fill-current" />
+                    Stop Protocol
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-2.5 h-2.5 fill-current" />
+                    Breathe with Sanjay
+                  </>
+                )}
+              </button>
+            </motion.div>
+
           </div>
 
         </div>
@@ -200,20 +302,20 @@ const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.9 }}
+        transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 pointer-events-none"
       >
-        <span className="font-body text-[9px] tracking-[0.5em] text-white/20 uppercase">Scroll</span>
+        <span className="font-body text-[9px] font-bold tracking-[0.35em] text-muted-foreground/50 uppercase">Scroll</span>
         <motion.div
           animate={{ scaleY: [0, 1, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           style={{ originY: 0 }}
           className="w-px h-8 bg-gradient-to-b from-primary to-transparent"
         />
       </motion.div>
 
-      {/* ── Bottom edge fade ── */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      {/* ── Bottom Edge Vignette Fade ── */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
 
     </section>
   );

@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Bebas Neue"', 'sans-serif'],
-        body: ['"DM Sans"', 'sans-serif'],
+        heading: ['"Cormorant Garamond"', 'serif'],
+        body: ['"Plus Jakarta Sans"', '"DM Sans"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

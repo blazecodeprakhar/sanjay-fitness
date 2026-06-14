@@ -4,10 +4,10 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "About", href: "/#about" },
+  { label: "Story", href: "/#about" },
   { label: "Coaching", href: "/#services" },
-  { label: "Certifications", href: "/#certifications" },
-  { label: "Mission", href: "/#mission" },
+  { label: "Credentials", href: "/#certifications" },
+  { label: "Philosophy", href: "/#mission" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -55,11 +55,14 @@ const Navbar = () => {
           {/* Logo (Left, or naturally left flex item) */}
           <div className="flex-1 lg:flex-none z-10">
             <a href="/" onClick={handleLogoClick} className="block w-fit">
-              <img
-                src="/logo_yellow_custom.png"
-                alt="SS Fitness"
-                className="h-8 md:h-10 w-auto object-contain logo-hover"
-              />
+              <div className="flex flex-col items-start leading-none group">
+                <span className="font-heading text-lg md:text-xl tracking-[0.12em] text-foreground font-bold transition-colors duration-300">
+                  SANJAY SINGH
+                </span>
+                <span className="font-body text-[8px] md:text-[9px] tracking-[0.25em] text-primary mt-1 font-bold">
+                  LIFESTYLE &amp; WELLNESS
+                </span>
+              </div>
             </a>
           </div>
 
@@ -80,9 +83,9 @@ const Navbar = () => {
           <div className="hidden lg:flex flex-1 lg:flex-none justify-end z-10">
             <Link
               to="/contact"
-              className="btn-premium font-body font-bold text-sm tracking-widest uppercase bg-primary text-primary-foreground px-8 py-3"
+              className="btn-premium font-body font-bold text-xs tracking-widest uppercase bg-primary text-primary-foreground px-6 py-3"
             >
-              START YOUR TRANSFORMATION
+              Begin Your Journey
             </Link>
           </div>
 
@@ -160,7 +163,7 @@ const Navbar = () => {
                 onClick={() => setMobileOpen(false)}
                 className="btn-premium w-full font-body font-bold text-sm tracking-[0.08em] uppercase bg-primary text-primary-foreground py-5 flex items-center justify-center rounded-2xl whitespace-nowrap"
               >
-                Start Your Transformation
+                Begin Your Journey
               </Link>
               <p className="text-center text-muted-foreground text-xs font-body mt-3 tracking-wider">
                 Free consultation · No commitment

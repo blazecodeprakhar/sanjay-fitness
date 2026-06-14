@@ -7,66 +7,61 @@ const packages = [
   {
     id: "01",
     tier: "Starter",
-    name: "FOUNDATION",
-    tagline: "Begin your transformation",
+    name: "RITUAL",
+    tagline: "Begin your daily practice",
     price: "₹4,999",
     period: "/ month",
     badge: null,
-    desc: "Perfect for beginners who are ready to commit to a healthier lifestyle with expert guidance and a structured plan.",
+    desc: "Cultivate foundational alignment, basic mobility, and conscious morning habits with expert structure.",
     features: [
-      "Custom Training Plan (3 days/week)",
-      "Basic Nutrition Guidelines",
+      "Custom Daily Mobility Routine",
+      "Introduction to Conscious Nutrition",
       "Weekly Check-in via WhatsApp",
-      "Body Measurement Tracking",
-      "Access to Exercise Library",
-      "Monthly Progress Review",
+      "Access to Movement Library",
+      "Monthly Wellness Review",
     ],
-    cta: "Start Foundation",
+    cta: "Start Ritual",
     highlight: false,
   },
   {
     id: "02",
     tier: "Most Popular",
-    name: "ELITE",
-    tagline: "The complete transformation system",
+    name: "FLOW",
+    tagline: "The complete lifestyle shift",
     price: "₹8,999",
     period: "/ month",
     badge: "MOST POPULAR",
-    desc: "The complete body recomposition system. Ideal for those serious about achieving real, lasting results with full accountability.",
+    desc: "The signature wellness program. Develop deep posture control, customized whole-food strategies, and stable habit loops.",
     features: [
-      "Custom Training Plan (5 days/week)",
-      "Personalized Macro Nutrition Plan",
-      "Daily WhatsApp Support & Check-ins",
-      "Weekly Video Form Review",
-      "Bi-weekly Strategy Calls",
-      "Supplement Guidance",
-      "Mindset & Habit Coaching",
-      "Full Progress Photo Reviews",
+      "Custom Movement Plan (5 days/week)",
+      "Conscious Nutrition & Whole-Food Guide",
+      "Daily WhatsApp Alignment Check-ins",
+      "Weekly Pose & Alignment Form Review",
+      "Bi-weekly 1:1 Integration Calls",
+      "Ritual & Routine Habit Design",
+      "Nervous System & Breathing Guide",
     ],
-    cta: "Go Elite",
+    cta: "Begin Flow",
     highlight: true,
   },
   {
     id: "03",
     tier: "Premium",
-    name: "CHAMPION",
-    tagline: "VIP coaching experience",
+    name: "HARMONY",
+    tagline: "VIP holistic guidance",
     price: "₹14,999",
     period: "/ month",
     badge: null,
-    desc: "The ultimate VIP coaching experience — for high performers who demand the best and refuse to settle for anything less.",
+    desc: "The ultimate 1:1 wellness mentorship for founders, executives, and high performers who demand complete, high-touch support.",
     features: [
-      "Full Custom Plan (6 days/week)",
-      "Advanced Nutrition Periodisation",
-      "Unlimited Direct Coach Access",
-      "Live Weekly Video Coaching Calls",
-      "Priority 24/7 WhatsApp Support",
-      "In-Person Session (if local)",
-      "Comprehensive Blood Work Review",
-      "Lifestyle & Stress Management",
-      "Quarterly Body Transformation Report",
+      "Unlimited Direct Mentor WhatsApp Access",
+      "Custom Movement & Restorative Yoga",
+      "Advanced Nutritional Periodization",
+      "Live Weekly Video Integration Calls",
+      "Stress Response & HRV Optimization",
+      "Sleep System Optimization Design",
     ],
-    cta: "Go Champion",
+    cta: "Start Harmony",
     highlight: false,
   },
 ];
@@ -75,14 +70,14 @@ const PackagesSection = () => {
   return (
     <section
       id="packages"
-      className="py-20 md:py-36 border-t border-border relative overflow-hidden"
+      className="py-20 md:py-36 border-t border-border relative overflow-hidden bg-background"
     >
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/4 blur-[150px] rounded-full pointer-events-none" />
 
       {/* Watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-        <span className="font-heading text-[15vw] text-white/[0.015] leading-none whitespace-nowrap">
+        <span className="font-heading text-[15vw] text-foreground/[0.012] leading-none whitespace-nowrap font-bold">
           INVEST
         </span>
       </div>
@@ -93,7 +88,7 @@ const PackagesSection = () => {
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-[2px] bg-primary rounded-full" />
-            <span className="font-body text-xs tracking-[0.4em] uppercase text-primary font-semibold">
+            <span className="font-body text-xs tracking-[0.4em] uppercase text-primary font-bold">
               Investment
             </span>
           </div>
@@ -101,18 +96,18 @@ const PackagesSection = () => {
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading leading-tight">
               CHOOSE YOUR{" "}
               <span className="relative inline-block">
-                <span className="text-primary">LEVEL</span>
+                <span className="text-primary italic font-medium">LEVEL</span>
                 <motion.div
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.4 }}
-                  className="absolute -bottom-2 left-0 right-0 h-[3px] bg-primary origin-left rounded-full"
+                  className="absolute -bottom-2 left-0 right-0 h-[2px] bg-primary origin-left rounded-full"
                 />
               </span>
             </h2>
             <p className="text-muted-foreground text-base md:text-lg max-w-xs font-body leading-relaxed md:text-right">
-              Every plan includes a <span className="text-foreground/80 font-medium">free consultation</span> before you commit to anything.
+              Every plan includes a <span className="text-foreground/90 font-medium">free consultation</span> before you commit to anything.
             </p>
           </div>
         </AnimatedSection>
@@ -126,16 +121,16 @@ const PackagesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
-              className={`relative rounded-3xl flex flex-col overflow-hidden transition-all duration-500 ${
+              className={`relative rounded-3xl flex flex-col overflow-hidden transition-all duration-500 shadow-sm ${
                 pkg.highlight
-                  ? "border-2 border-primary bg-secondary/40 shadow-[0_0_60px_rgba(255,215,0,0.12)]"
-                  : "border border-white/10 bg-secondary/15 hover:border-white/25 hover:bg-secondary/25"
+                  ? "border-2 border-primary bg-secondary/50"
+                  : "border border-border/80 bg-secondary/20 hover:border-border hover:bg-secondary/35"
               }`}
             >
               {/* Popular badge */}
               {pkg.badge && (
                 <div className="absolute top-0 left-0 right-0 flex justify-center">
-                  <div className="bg-primary text-black font-heading text-[10px] tracking-[0.4em] px-6 py-1.5 rounded-b-xl">
+                  <div className="bg-primary text-white font-body font-bold text-[9px] tracking-[0.25em] px-5 py-1 rounded-b-xl uppercase">
                     {pkg.badge}
                   </div>
                 </div>
@@ -145,17 +140,17 @@ const PackagesSection = () => {
 
                 {/* Tier label + number */}
                 <div className="flex items-center justify-between mb-5">
-                  <span className="font-body text-[10px] tracking-[0.4em] uppercase text-muted-foreground">
+                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-muted-foreground font-bold">
                     {pkg.tier}
                   </span>
-                  <span className={`font-heading text-2xl ${pkg.highlight ? "text-primary" : "text-white/15"}`}>
+                  <span className={`font-heading text-2xl font-bold ${pkg.highlight ? "text-primary" : "text-foreground/15"}`}>
                     {pkg.id}
                   </span>
                 </div>
 
                 {/* Name + tagline */}
                 <div className="mb-6">
-                  <h3 className={`font-heading text-3xl md:text-4xl mb-1 ${pkg.highlight ? "text-primary" : "text-foreground"}`}>
+                  <h3 className={`font-heading text-3xl md:text-4xl mb-1 font-bold ${pkg.highlight ? "text-primary" : "text-foreground"}`}>
                     {pkg.name}
                   </h3>
                   <p className="font-body text-xs text-muted-foreground tracking-wider">
@@ -164,9 +159,9 @@ const PackagesSection = () => {
                 </div>
 
                 {/* Price */}
-                <div className="mb-6 pb-6 border-b border-white/8">
+                <div className="mb-6 pb-6 border-b border-border/50">
                   <div className="flex items-end gap-1.5">
-                    <span className={`font-heading text-4xl md:text-5xl leading-none ${pkg.highlight ? "text-primary" : "text-foreground"}`}>
+                    <span className={`font-heading text-4xl md:text-5xl leading-none font-bold ${pkg.highlight ? "text-primary" : "text-foreground"}`}>
                       {pkg.price}
                     </span>
                     <span className="font-body text-sm text-muted-foreground mb-1.5">{pkg.period}</span>
@@ -183,11 +178,11 @@ const PackagesSection = () => {
                   {pkg.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
                       <div className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        pkg.highlight ? "bg-primary" : "bg-white/10 border border-white/15"
+                        pkg.highlight ? "bg-primary" : "bg-secondary/40 border border-border/80"
                       }`}>
-                        <Check className={`w-2.5 h-2.5 ${pkg.highlight ? "text-black" : "text-primary"}`} strokeWidth={3} />
+                        <Check className={`w-2.5 h-2.5 ${pkg.highlight ? "text-white" : "text-primary"}`} strokeWidth={3} />
                       </div>
-                      <span className="font-body text-sm text-foreground/70 leading-snug">{feature}</span>
+                      <span className="font-body text-sm text-foreground/75 leading-snug">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -197,8 +192,8 @@ const PackagesSection = () => {
                   to="/contact"
                   className={`w-full font-body font-bold text-sm tracking-[0.15em] uppercase py-4 rounded-2xl flex items-center justify-center gap-3 group transition-all duration-400 ${
                     pkg.highlight
-                      ? "bg-primary text-black hover:brightness-110"
-                      : "border border-white/20 text-foreground hover:border-primary hover:text-primary bg-transparent"
+                      ? "bg-primary text-white hover:brightness-105"
+                      : "border border-border/85 text-foreground hover:border-primary hover:text-primary bg-background shadow-sm"
                   }`}
                 >
                   {pkg.cta}
@@ -212,20 +207,20 @@ const PackagesSection = () => {
 
         {/* Bottom note */}
         <AnimatedSection delay={0.6}>
-          <div className="mt-10 md:mt-14 flex flex-col sm:flex-row items-center justify-between gap-5 px-6 py-5 md:px-8 border border-white/8 rounded-2xl bg-secondary/10">
+          <div className="mt-10 md:mt-14 flex flex-col sm:flex-row items-center justify-between gap-5 px-6 py-5 md:px-8 border border-border rounded-2xl bg-secondary/25">
             <div className="flex items-center gap-3">
               <div className="flex">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="font-body text-sm text-muted-foreground">
-                All plans include a <span className="text-foreground/80 font-semibold">free 30-min consultation</span>
+              <p className="font-body text-sm text-muted-foreground font-medium">
+                All plans include a <span className="text-foreground/90 font-bold">free 30-min consultation</span>
               </p>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-primary" />
-              <p className="font-body text-xs text-muted-foreground tracking-wider uppercase">
+              <p className="font-body text-xs text-muted-foreground tracking-wider uppercase font-bold">
                 No lock-in · Cancel anytime
               </p>
             </div>
